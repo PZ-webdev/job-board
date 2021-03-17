@@ -2,7 +2,9 @@
 
 ## About the project
 
-    Are you looking for your dream job? You've come to the right place ! This project allows you to search for a job and find an employee. It allows for a quick application of a job offer, creating a CV.
+   Are you looking for your dream job? You've come to the right place ! 
+   This project allows you to search for a job and find an employee. 
+   It allows for a quick application of a job offer, creating a CV.
 
 
 ## Find your offer
@@ -21,5 +23,4 @@
 
 ## Version
 
-    Actually version: 0.0.2
-    
+    Current version: 0.0.2
