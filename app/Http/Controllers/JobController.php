@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
+use App\Models\ApplyJob;
 use Illuminate\Http\Request;
-use Symfony\Component\Console\Input\Input;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class JobController extends Controller
 {
@@ -51,9 +53,12 @@ class JobController extends Controller
     public function show($id)
     {
         $job = Job::find($id);
-    
+
+        $apply = ApplyJob::where('user_id', Auth::id())->where('job_id', $id)->first();
+        $apply ? $applyJob = true : $applyJob = false;
+
         if($job){
-            return view('job', compact('job'));
+            return view('job', compact('job', 'applyJob'));
         }
 
         // when the job does't exist return 404
@@ -107,8 +112,6 @@ class JobController extends Controller
         $job_type = $request->job_type;
         $job_experience = $request->job_experience;
 
-        // dd($search);
-
 
         $jobs = Job::query()
                     ->where('title', 'LIKE', '%' . $search .'%')
@@ -116,7 +119,44 @@ class JobController extends Controller
                     // ->orWhere('job_type', 'LIKE', '%' . $job_type .'%')
                     ->get();
 
-                    
         return view('search-jobs', compact('jobs', 'search'));
+    }
+    
+    /**
+     * applyforjob
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function applyforjob(Request $request)
+    {
+        try {
+            $this->validate($request, [
+                'cv' => 'required|mimes:pdf|max:2048',
+              ]);
+
+            $applyJob = new ApplyJob();
+            if ($request->hasFile('cv')) {
+                $image = $request->file('cv');
+                $name = $image->hashName();
+                $destinationPath = public_path('/storage/documents');
+                $imagePath = $destinationPath. "/".  $name;
+                $image->move($destinationPath, $name);
+                $applyJob->cv = $imagePath;
+              }
+            $applyJob->user_id = Auth::id() == null ? 0 : Auth::id();
+            $applyJob->job_id = $request->job_id;
+            $applyJob->website = $request->website;
+            $applyJob->description = $request->description;
+            $applyJob->save();
+
+            return response()->json([
+                'success' => 'Ajax request submitted successfully',
+                'message' => 'Aplikowanie zakończone pozytywnie'
+                ]); 
+        } catch (\Throwable $th) {
+            return $th;
+        }
+            
     }
 }

@@ -14,8 +14,9 @@
             </div>
         </div>
     </div>
+    
     <!--/ bradcam_area  -->
-
+    
     <div class="job_details_area">
         <div class="container">
             <div class="row">
@@ -75,50 +76,66 @@
                             <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing.</p>
                         </div> --}}
                     </div>
-                    <div class="apply_job_form white-bg">
-                        <h4>Apply for the job</h4>
-                        <form action="#">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="input_field">
-                                        <input type="text" placeholder="Your name">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input_field">
-                                        <input type="text" placeholder="Email">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="input_field">
-                                        <input type="text" placeholder="Website/Portfolio link">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                          <button type="button" id="inputGroupFileAddon03"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
-                                          </button>
+                    @if($applyJob == false)
+                        <div class="apply_job_form white-bg">
+                            <h4>Apply for the job</h4>
+                            <div id="message" style="color: red;"></div>
+                            <form enctype="multipart/form-data" id="form" method="POST">
+
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="job_id" id="job_id" value="{{$job->id}}">
+                                <div class="row">
+                                   @guest
+                                    <div class="col-md-6">
+                                        <div class="input_field">
+                                            <input type="text" placeholder="Your name" id="name">
                                         </div>
-                                        <div class="custom-file">
-                                          <input type="file" class="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03">
-                                          <label class="custom-file-label" for="inputGroupFile03">Upload CV</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input_field">
+                                            <input type="text" placeholder="Email" id="email" name="email">
                                         </div>
-                                      </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="input_field">
-                                        <textarea name="#" id="" cols="30" rows="10" placeholder="Coverletter"></textarea>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="submit_btn">
-                                        <button class="boxed-btn3 w-100" type="submit">Apply Now</button>
+                                   @endguest
+                                    <div class="col-md-12">
+                                        <div class="input_field">
+                                            <input type="text" placeholder="Website/Portfolio link" id="website" name="website">
+                                        </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                            <button type="button" id="inputGroupFileAddon03"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                                            </button>
+                                            </div>
+                                            <div class="custom-file">
+                                                
+                                                <input type="file" class="custom-file-input" id="cv" name="cv"/>
+                                                <label class="custom-file-label" for="inputGroupFile03">Upload CV</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="input_field">
+                                            <textarea name="description" id="description" cols="30" rows="10" placeholder="Coverletter" name="description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="submit_btn">
+                                            <button class="boxed-btn3 w-100" type="submit" id="ApplyBtn">Apply Now</button>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    @else
+                        <div class="apply_job_form white-bg">
+                            <h4 style="text-center">Już złożyłeś swoje CV !</h4>
+                        </div>
+                    @endif
+
+                    
                 </div>
                 <div class="col-lg-4">
                     <div class="job_sumary">
@@ -147,29 +164,8 @@
                     <div class="job_location_wrap">
                         <div class="job_lok_inner">
                             <div id="map" style="height: 200px;"></div>
-                            <script>
-                              function initMap() {
-                                var uluru = {lat: -25.363, lng: 131.044};
-                                var grayStyles = [
-                                  {
-                                    featureType: "all",
-                                    stylers: [
-                                      { saturation: -90 },
-                                      { lightness: 50 }
-                                    ]
-                                  },
-                                  {elementType: 'labels.text.fill', stylers: [{color: '#ccdee9'}]}
-                                ];
-                                var map = new google.maps.Map(document.getElementById('map'), {
-                                  center: {lat: -31.197, lng: 150.744},
-                                  zoom: 9,
-                                  styles: grayStyles,
-                                  scrollwheel:  false
-                                });
-                              }
-                              
-                            </script>
-                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpfS1oRGreGSBU5HHjMmQ3o5NLw7VdJ6I&callback=initMap"></script>
+                            
+                            {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpfS1oRGreGSBU5HHjMmQ3o5NLw7VdJ6I&callback=initMap"></script> --}}
                             
                           </div>
                     </div>
@@ -177,4 +173,37 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+<script>
+    
+    $('#form').submit(function(e){
+        e.preventDefault();
+        var formData = new FormData(this);
+       
+        // Validation MUST HAVE HERE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+        });
+        $.ajax({
+            method: 'POST',
+            url: "{{ route('applyforjob') }}",
+            data: formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success: function(data){
+                console.log(data);
+                $('#message').text(data.message);
+            },
+            error: function(e){
+                console.error("Error: " + e);
+            }
+        });
+
+    });
+</script>
 @endsection

@@ -19,11 +19,7 @@
   <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
     <div class="card p-3">
       <div class="e-navlist e-navlist--active-bg">
-        <ul class="nav">
-          <li class="nav-item"><a class="nav-link px-2 active" href="./overview.html"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Główna</span></a></li>
-          <li class="nav-item"><a class="nav-link px-2" href="./users.html"><i class="fa fa-fw fa-th mr-1"></i><span>CV</span></a></li>
-          <li class="nav-item"><a class="nav-link px-2" href="./settings.html"><i class="fa fa-fw fa-cog mr-1"></i><span>Złożone CV</span></a></li>
-        </ul>
+       @include('account.includes.nav')
       </div>
     </div>
   </div>
@@ -45,7 +41,7 @@
                 <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                   <div class="text-center text-sm-left mb-2 mb-sm-0">
                     <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{Auth()->user()->name}}</h4>
-                    <p class="mb-0">@johnny.s</p>
+                    <p class="mb-0">@johnny.s (login)</p>
                     <div class="text-muted"><small>Last seen 2 hours ago</small></div>
                     <div class="mt-2">
                       <button class="btn btn-primary" type="button">
@@ -56,7 +52,7 @@
                   </div>
                   <div class="text-center text-sm-right">
                     <span class="badge badge-secondary">administrator</span>
-                    <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
+                    <div class="text-muted"><small>Joined {{Auth()->user()->created_at}}</small></div>
                   </div>
                 </div>
               </div>

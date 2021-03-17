@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplyForTheJobTable extends Migration
+class CreateCreatedCvTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateApplyForTheJobTable extends Migration
      */
     public function up()
     {
-        Schema::create('apply_for_the_job', function (Blueprint $table) {
+        Schema::create('created_cv', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-
-            $table->foreignId('job_id')->constrained('jobs');
-            $table->string('website')->nullable();
-            $table->string('cv')->nullable();
-            $table->text('description')->nullable();
+            $table->text('text');
+            $table->string('cv_url')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateApplyForTheJobTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('apply_for_the_job');
+        Schema::dropIfExists('created_cv');
     }
 }

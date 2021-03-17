@@ -6,6 +6,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\Auth\LoginController;
+use GuzzleHttp\Psr7\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +25,19 @@ Route::get('/contact', [MainController::class, 'contact'])->name('contact');
 
 Route::get('/jobs', [JobController::class, 'index'])->name('job.index');
 
-Route::get('/jobs/{title}', [JobController::class, 'show'])->name('job.show');
+Route::get('/jobs/{id}', [JobController::class, 'show'])->name('job.show');
 
 Route::post('/search', [JobController::class, 'search'])->name('search-job');
 
+Route::post('/applyforjob', [JobController::class, 'applyforjob'])->name('applyforjob');
 
 Auth::routes();
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::prefix('home')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/createCV', [HomeController::class, 'createCvPage'])->name('create.cv');
+    
+    Route::post('/createCV/store', [HomeController::class, 'storeCv'])->name('store.cv');
+});
+
